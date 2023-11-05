@@ -4,3 +4,9 @@
 2. Create airflow folders `mkdir dags logs plugins`
 3. Build the image `docker-compose up airflow-init`
 4. Run the container `docker-compose up`
+
+
+### Instructions to setup Trino
+
+1. Download the docker image `docker pull trinodb/trino`
+2. Spin up a Trino container `docker run -p 8090:8080 --name trino trinodb/trino`
