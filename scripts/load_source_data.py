@@ -4,20 +4,27 @@ from sqlalchemy import create_engine
 
 if __name__ == "__main__":
 
+    TRINO_USER = 'admin'
+    TRINO_PWD = ''
+    TRINO_PORT = 8085
+    CATALOG_NAME = 'hdfs'
+    TABLE_NAME = 'clickstream_source'
+    SCHEMA_NAME = 'osds'
+
     # Read data from CSV file
-    # data = pd.read_csv('./../data/vodclickstream_uk_movies_mini.csv')
     data = pd.read_csv('./../data/vodclickstream_uk_movies.csv')
-    print(data.dtypes)
-    print(data)
+    data['event_date'] = pd.to_datetime(data['datetime']).dt.date
 
-    conn = create_engine('trino://admin:@localhost:8085/hdfs')
+    print(f"Loading {len(data):,} records")
 
-    data.to_sql(name='clickstream_source',
-                schema='osds',
+    conn = create_engine(f'trino://{TRINO_USER}:{TRINO_PWD}@localhost:{TRINO_PORT}/{CATALOG_NAME}')
+
+    data.to_sql(name=TABLE_NAME,
+                schema=SCHEMA_NAME,
                 con=conn,
                 index=False,
-                chunksize=7_000,
+                chunksize=5_000,
                 if_exists='replace',
                 method='multi')
 
-    print("Loading complete")
+    print("Data loading complete")
