@@ -1,15 +1,14 @@
 import pandas as pd
 from sqlalchemy import create_engine
 
+TRINO_USER = 'admin'
+TRINO_PWD = ''
+TRINO_PORT = 8085
+CATALOG_NAME = 'hdfs'
+TABLE_NAME = 'clickstream_source'
+SCHEMA_NAME = 'osds'
 
 if __name__ == "__main__":
-
-    TRINO_USER = 'admin'
-    TRINO_PWD = ''
-    TRINO_PORT = 8085
-    CATALOG_NAME = 'hdfs'
-    TABLE_NAME = 'clickstream_source'
-    SCHEMA_NAME = 'osds'
 
     # Read data from CSV file
     data = pd.read_csv('./../data/vodclickstream_uk_movies.csv')
