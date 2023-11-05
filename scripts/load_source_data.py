@@ -1,14 +1,11 @@
 import pandas as pd
-from sqlalchemy import create_engine
+from utils import get_trino_conn
 
-TRINO_USER = 'admin'
-TRINO_PWD = ''
-TRINO_PORT = 8085
-CATALOG_NAME = 'hdfs'
-TABLE_NAME = 'clickstream_source'
-SCHEMA_NAME = 'osds'
 
 if __name__ == "__main__":
+
+    TABLE_NAME = 'clickstream_source'
+    SCHEMA_NAME = 'osds'
 
     # Read data from CSV file
     data = pd.read_csv('./../data/vodclickstream_uk_movies.csv')
@@ -16,7 +13,7 @@ if __name__ == "__main__":
 
     print(f"Loading {len(data):,} records")
 
-    conn = create_engine(f'trino://{TRINO_USER}:{TRINO_PWD}@localhost:{TRINO_PORT}/{CATALOG_NAME}')
+    conn = get_trino_conn()
 
     data.to_sql(name=TABLE_NAME,
                 schema=SCHEMA_NAME,
