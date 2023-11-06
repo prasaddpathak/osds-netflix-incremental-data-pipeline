@@ -4,11 +4,11 @@ from utils import get_trino_conn
 
 if __name__ == "__main__":
 
-    TABLE_NAME = 'clickstream_source'
+    TABLE_NAME = 'source'
     SCHEMA_NAME = 'osds'
 
     # Read data from CSV file
-    data = pd.read_csv('./../data/vodclickstream_uk_movies.csv')
+    data = pd.read_csv('../../../../data/vodclickstream_uk_movies.csv')
     data['event_date'] = pd.to_datetime(data['datetime']).dt.date
 
     print(f"Loading {len(data):,} records")
