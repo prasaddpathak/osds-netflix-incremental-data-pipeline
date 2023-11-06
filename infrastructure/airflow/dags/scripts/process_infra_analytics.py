@@ -1,13 +1,12 @@
 
-def process_movie_analytics(*args):
-    """Process clicks data to generate movie analytics"""
+def process_infra_analytics(*args):
+    """Process clicks data to generate infra analytics"""
 
     import pandas as pd
-
     from sqlalchemy import create_engine
 
     SOURCE_TABLE = 'clicks'
-    TARGET_TABLE = 'movie_analytics'
+    TARGET_TABLE = 'infra_analytics'
     SCHEMA_NAME = 'osds'
 
     event_date = args[0]
@@ -26,25 +25,24 @@ def process_movie_analytics(*args):
     print(f"Creating new partition for {SCHEMA_NAME}.{TARGET_TABLE}")
 
     INSERT_QUERY = f"""SELECT
-                            movie_id, title, genres,
+                            CAST(date_format(datetime, '%Y-%m-%d %H:00:00') AS TIMESTAMP) as event_hour,
                             ROUND(SUM(CASE WHEN duration > 0 THEN duration ELSE NULL END)/60, 2) as total_watch_time_min,
-                            ROUND(AVG(CASE WHEN duration > 0 THEN duration ELSE NULL END)/60, 2) as avg_watch_time_min,
                             COUNT(clickid) as clicks,
                             SUM(CASE WHEN duration > 0 THEN 1 ELSE 0 END) as views,
                             SUM(CASE WHEN duration = 0 THEN 1 ELSE 0 END) as bounces,
-                            SUM(CASE WHEN duration > 0 AND EXTRACT(HOUR FROM datetime) BETWEEN 6 AND 13 THEN 1 ELSE 0 END ) as morning_hour_viewers,
-                            SUM(CASE WHEN duration > 0 AND EXTRACT(HOUR FROM datetime) BETWEEN 14 AND 21 THEN 1 ELSE 0 END ) as evening_hour_viewers,
-                            SUM(CASE WHEN duration > 0 AND (EXTRACT(HOUR FROM datetime) >= 22 OR EXTRACT(HOUR FROM datetime)  <=  5) THEN 1 ELSE 0 END ) as night_hour_viewers,
                             event_date
                         FROM hdfs.{SCHEMA_NAME}.{SOURCE_TABLE}
                         WHERE 1=1
                             AND event_date= DATE '{event_date}'
                             AND same_day_next_click
-                        GROUP BY event_date, movie_id, title, genres
+                        GROUP BY event_date,  date_format(datetime, '%Y-%m-%d %H:00:00')
                     """
 
     df = pd.read_sql(sql=INSERT_QUERY,
-                     con=conn)
+                     con=conn,
+                     parse_dates={
+                         'event_hour': '%Y-%m-%d %H:%M:%S',
+                     })
 
     print(f"Writing {len(df):} records to {SCHEMA_NAME}.{TARGET_TABLE}")
 
@@ -60,5 +58,5 @@ def process_movie_analytics(*args):
 
 # Local Testing
 # if __name__ == "__main__":
-#     process_movie_analytics('2017-01-04')
+#     process_infra_analytics('2017-01-04')
 
