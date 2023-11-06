@@ -1,3 +1,4 @@
+"""One Time script to load clicks data as source"""
 import pandas as pd
 from utils import get_trino_conn
 

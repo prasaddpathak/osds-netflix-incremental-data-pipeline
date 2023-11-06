@@ -13,8 +13,8 @@ def copy_source_data(*args):
     event_date = args[0]
     print(f"Running for {event_date}")
 
-    # conn = create_engine('trino://admin:@host.docker.internal:8085/hdfs')
-    conn = create_engine('trino://admin:@localhost:8085/hdfs')
+    conn = create_engine('trino://admin:@host.docker.internal:8085/hdfs')
+    # conn = create_engine('trino://admin:@localhost:8085/hdfs')    # For Pythonic Run
 
     print("Dropping existing partition")
 
@@ -22,7 +22,6 @@ def copy_source_data(*args):
 
     with conn.connect() as con:
         con.execute(DELETE_QUERY)
-
 
     print("Creating new partition")
 
@@ -43,7 +42,7 @@ def copy_source_data(*args):
                          'release_date': '%Y-%m-%d',
                      })
 
-    print(f"Copying {len(df):} records")
+    print(f"Writing {len(df):} records")
 
     df.to_sql(name=TARGET_TABLE,
               schema=SCHEMA_NAME,
@@ -55,6 +54,6 @@ def copy_source_data(*args):
     print('Partition write complete')
 
 # Local Testing
-if __name__ == "__main__":
-    copy_source_data('2017-01-04')
+# if __name__ == "__main__":
+#     copy_source_data('2017-01-04')
 
