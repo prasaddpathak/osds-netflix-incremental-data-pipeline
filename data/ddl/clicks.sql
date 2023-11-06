@@ -1,4 +1,4 @@
--- DROP TABLE hdfs.osds.clicks;
+DROP TABLE IF EXISTS hdfs.osds.clicks;
 
 CREATE TABLE hdfs.osds.clicks
 (

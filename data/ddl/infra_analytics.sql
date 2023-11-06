@@ -1,4 +1,4 @@
--- DROP TABLE hdfs.osds.infraanalytics;
+DROP TABLE IF EXISTS hdfs.osds.infraanalytics;
 
 CREATE TABLE hdfs.osds.infra_analytics
 (

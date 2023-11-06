@@ -1,4 +1,4 @@
--- DROP TABLE hdfs.osds.source;
+DROP TABLE IF EXISTS hdfs.osds.source;
 
 CREATE TABLE hdfs.osds.source
 (

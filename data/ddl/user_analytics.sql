@@ -1,4 +1,4 @@
--- DROP TABLE hdfs.osds.user_analytics;
+DROP TABLE IF EXISTS hdfs.osds.user_analytics;
 
 CREATE TABLE hdfs.osds.user_analytics
 (

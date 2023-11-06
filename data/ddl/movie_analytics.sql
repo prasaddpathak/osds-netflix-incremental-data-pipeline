@@ -1,4 +1,4 @@
--- DROP TABLE hdfs.osds.movie_analytics;
+DROP TABLE IF EXISTS hdfs.osds.movie_analytics;
 
 CREATE TABLE hdfs.osds.movie_analytics
 (
