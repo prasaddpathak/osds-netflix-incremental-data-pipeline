@@ -2,7 +2,7 @@
 .vscode
 .DS_Store
 infrastructure/airflow/logs
-data
+data/vodclickstream_uk_movies.csv
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
