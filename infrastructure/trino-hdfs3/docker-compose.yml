@@ -13,25 +13,25 @@ services:
     networks:
       - trino-network
 
-  trino-worker-1:
-    image: 'trinodb/trino:406'
-    hostname: trino-worker-1
-    volumes:
-      - ./etc-worker:/etc/trino
-      - ./conf/core-site.xml:/etc/hadoop/conf/core-site.xml:ro
-      - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml:ro
-    networks:
-      - trino-network
-
-  trino-worker-2:
-    image: 'trinodb/trino:406'
-    hostname: trino-worker-2
-    volumes:
-      - ./etc-worker:/etc/trino
-      - ./conf/core-site.xml:/etc/hadoop/conf/core-site.xml:ro
-      - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml:ro
-    networks:
-      - trino-network
+#  trino-worker-1:
+#    image: 'trinodb/trino:406'
+#    hostname: trino-worker-1
+#    volumes:
+#      - ./etc-worker:/etc/trino
+#      - ./conf/core-site.xml:/etc/hadoop/conf/core-site.xml:ro
+#      - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml:ro
+#    networks:
+#      - trino-network
+#
+#  trino-worker-2:
+#    image: 'trinodb/trino:406'
+#    hostname: trino-worker-2
+#    volumes:
+#      - ./etc-worker:/etc/trino
+#      - ./conf/core-site.xml:/etc/hadoop/conf/core-site.xml:ro
+#      - ./conf/hdfs-site.xml:/etc/hadoop/conf/hdfs-site.xml:ro
+#    networks:
+#      - trino-network
 
   hadoop-node:
     image: 'ghcr.io/trinodb/testing/hive3.1-hive:latest'

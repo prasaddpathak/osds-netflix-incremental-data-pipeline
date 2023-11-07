@@ -26,7 +26,7 @@ dag = DAG(
     default_args=default_args,
     max_active_runs=1,
     start_date=datetime(2017, 1, 1),
-    end_date=datetime(2017, 3, 31)
+    end_date=datetime(2017, 5, 15)
 )
 
 copy_source_data = PythonOperator(
